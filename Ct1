@@ -1,0 +1,1 @@
+num1,num2 = int(input('Provide two numbers for the equation, have a space better the numbers'))
