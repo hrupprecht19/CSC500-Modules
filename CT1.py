@@ -6,8 +6,9 @@
 #two numbers, add them together to find the output. Also, 
 #subtract the two numbers to find the output.
 
-num1 = int(input('Please provide a number.'))
-num2 = int(input('Please provide another number.'))
+num1, num2 = [int(x) for x in input('Please provide two numbers separated by a space: ').split()]
+#num1 = int(input('Please provide a number.'))
+#num2 = int(input('Please provide another number.'))
 print( num1, '+', num2, '=', num1 + num2 )
 print( num1, '-', num2, '=', num1 - num2 )
 
@@ -21,7 +22,9 @@ print( num1, '-', num2, '=', num1 - num2 )
 #numbers, multiply them #together to find the output. Also, divide 
 #num1/num2 to find the output.
 
+num1,num2 = [int(y) for y in input('Provide two numbers for the equation, have a space better the numbers').split()]
 #Compile and submit your pseudocode, source code, and screenshots of the 
 #application executing #the code from parts 1 and 2, the results and 
-#GIT repository in a single document (Word is #preferred).
+#GIT repository in a single document (Word is #preferred).56
+
 
