@@ -5,10 +5,10 @@
 #with an 18 percent tip and 7 percent sales tax. Display each of these amounts and the total 
 #price.
 
-o inputs = []  # Initialize an empty list
+charge_inputs = []  # Initialize an empty list
 
-while True:
-    user_input = input("Enter a value (or type 'done' to finish): ")  # Get user input
+While True:
+    charge_input = float(input("Enter the charge for the food: /n type done when no more prices to add. $"))   # Get user input
     if user_input.lower() == 'done':  # Check if the user is done (case-insensitive)
         break  # Exit the loop
     inputs.append(user_input)  # Add the input to the list
