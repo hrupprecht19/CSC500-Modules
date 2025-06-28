@@ -5,6 +5,21 @@
 #with an 18 percent tip and 7 percent sales tax. Display each of these amounts and the total 
 #price.
 
+o inputs = []  # Initialize an empty list
+
+while True:
+    user_input = input("Enter a value (or type 'done' to finish): ")  # Get user input
+    if user_input.lower() == 'done':  # Check if the user is done (case-insensitive)
+        break  # Exit the loop
+    inputs.append(user_input)  # Add the input to the list
+
+print("Your list of inputs:", inputs)
+
+
+
+
+
+
 #Part 2:
 #Many people keep time using a 24-hour clock (11 is 11am and 23 is 11pm, 0 is midnight). If it 
 #is currently 13 and you set your alarm to go off in 50 hours, it will be 15 (3pm). Write a 
