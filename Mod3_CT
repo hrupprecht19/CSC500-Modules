@@ -19,6 +19,9 @@ while True:
 
 print("Your list of inputs:", charge_inputs)
 
+# Calculate the total food charge
+food_charge = sum(charge_inputs)
+
 # Calculate tip and tax
 tip = food_charge * 0.18
 tax = food_charge * 0.07
