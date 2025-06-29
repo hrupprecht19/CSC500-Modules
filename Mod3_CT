@@ -43,3 +43,31 @@ print(f"Total Amount: ${bill_components[3]:.2f}")
 #now (in hours) and then ask for the number of hours to wait for the alarm. Your program 
 #should output what the time will be on a 24-hour clock when the alarm goes off.
 
+#Ask the user for the current time in hours (0 to 23)
+# Get a valid current time from the user
+while True:
+    try:
+        current_time = int(input("What is the current time (0-23)? "))
+        if 0 <= current_time <= 23:
+            break
+        else:
+            print("Please enter a number between 0 and 23.")
+    except ValueError:
+        print("Invalid input. Please enter a whole number.")
+    
+# Ask for the number of hours to wait
+while True:
+    try:
+        hours_to_wait = int(input("How many hours to wait for the alarm? "))
+        if hours_to_wait >= 0:
+            break
+        else:
+            print("Please enter a non-negative number.")
+    except ValueError:
+        print("Invalid input. Please enter a whole number.")
+
+# Calculate future alarm time using the module 
+alarm_time = (current_time + hours_to_wait)% 24
+
+# Display the result
+print(f"The alarm will go off at {alarm_time}:00 on a 24-hour clock.")
