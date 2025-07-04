@@ -1,0 +1,18 @@
+lifeguards = ["Lifeguard " + str(i) for i in range(1, 11)]
+on_duty = lifeguards[:7]    # First 7 lifeguards start on duty
+on_break = lifeguards[7:]   # Remaining 3 are on break
+
+for rotation in range(10):  # Run several 15-minute rotations
+    print(f"Rotation {rotation + 1}:")
+    print("  On Duty:", on_duty)
+    print("  On Break:", on_break)
+
+    # Rotate one lifeguard from duty to break, and vice versa
+    returning = on_break.pop(0)
+    resting = on_duty.pop(0)
+
+    on_duty.append(returning)
+    on_break.append(resting)
+
+    print(f"  {resting} goes on break.")
+    print(f"  {returning} returns to duty.\n")
