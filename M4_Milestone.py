@@ -14,8 +14,16 @@ class ItemToPurchase:
             self.item_price, 
             self.item_total
             ))
+
+        
+def get_total_value(inventory):
+    total = 0
+    for item in inventory:
+        total += item.item_total
+    return total
+    totaltotal
 #a place to store the items added 
-shopping_cart = [ ]
+inventory = [ ]
 # get the input in the string, float, interger format        
 # loop for more than one item
 while True:
@@ -26,11 +34,12 @@ while True:
     quantity = int(input("Enter the quantity: "))
 #FITIT added in a part for debuging the price and quantity
     item = ItemToPurchase(name, price, quantity)
-    shopping_cart.append(item)
+    inventory.append(item)
 
-print("\n Shopping Cart Summary:")
-for item in shopping_cart:
+print("\n Inventory Summary:")
+for item in inventory:
     item.print_item_cost()
 
 
-
+# Print total inventory value
+print("\nTotal inventory value: ${:.2f}".format(get_total_value(inventory)))
