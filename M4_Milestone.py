@@ -15,7 +15,7 @@ class ItemToPurchase:
             self.item_total
             ))
 
-        
+       
 def get_total_value(inventory):
     total = 0
     for item in inventory:
@@ -30,16 +30,28 @@ while True:
     name = input("Enter the item name (or type 'done' to finish)")
     if name == 'done':
         break
-    price = float(input("Enter the price: "))
-    quantity = int(input("Enter the quantity: "))
+    #creating a nested loop to have valued inputs
+    while True:
+        try:
+            price = float(input("Enter the price: "))
+            break
+        except ValueError:
+            print("Invaild entry. Please enter a number for price.") 
+    #creating another nested loop to have a valued input
+    while True:
+        try:
+            quantity = int(input("Enter the quantity: "))
+            break
+        except ValueError:
+            print("Invaild entry. Please enter a whole number for quantity.")
 #FITIT added in a part for debuging the price and quantity
+    
     item = ItemToPurchase(name, price, quantity)
     inventory.append(item)
 
 print("\n Inventory Summary:")
 for item in inventory:
     item.print_item_cost()
-
 
 # Print total inventory value
 print("\nTotal inventory value: ${:.2f}".format(get_total_value(inventory)))
