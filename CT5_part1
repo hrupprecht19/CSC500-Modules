@@ -1,0 +1,11 @@
+#part1 Create a program that will ask the number of years then start a loop for the 12months
+#start with a class
+class RainfallTracker:
+  def _init_(self):
+    self._monthly_rainfall ={}  #adding the _to the front makes it raw data
+    self._total_rainfall = 0 
+    self._total_months = 0 
+
+  def set_rainfall(self, year, month, amount):
+      """ trying the setter method"""
+      if not isinstance(year,int) or not isinstance(month, int): #isinstance() check is crucial for data validation
