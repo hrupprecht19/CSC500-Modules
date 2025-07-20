@@ -2,7 +2,7 @@
 class ItemToPurchase:   
     def __init__(self, item_name='none', item_description = 'none', item_price=0, item_quantity=0): #added description
         self.item_name = item_name
-        self.description = item_description
+        self.item_description = item_description
         self.item_price = item_price
         self.item_quantity = item_quantity
 
@@ -64,10 +64,8 @@ class ItemToPurchase:
 #Step2
 #function to get the total value of the inventory
 def get_total_value(inventory):
-    total = 0
-    for item in inventory:
-        total += item.item_total
-    return total    
+    return sum(item.item_total for item in inventory)
+    
 #Step3
 #place to store the items added
 inventory = []
@@ -120,38 +118,44 @@ class ShoppingCart:
         self.current_date = current_date
         self.cart_items =[]
 #add item to the cart
-    def add_item(self, ItemToPurchase):
-        self.cart_items.append(ItemToPurchase)
-#item to remove from cart
-    def remove_item(self, item_name):
-        for item in self.cart_items:
-            if item.name == item_name:
-                self.cart_items.remove(item)
+    def add_item(self, item: ItemToPurchase):
+        if not isinstance(item, ItemToPurchase):
+            raise ValueError("Item must be an instance of ItemToPurchase")
+        # Check if item already exists in the cart
+        for existing_item in self.cart_items:
+            if existing_item.item_name == item.item_name:
+                existing_item.item_quantity += item.item_quantity
                 return
-        print( "Item not found in cart. Nothing removed")
+        self.cart_items.append(item)
+#item to remove from cart
+    def remove_item(self, item_name: str):  
+        found = any(item.item_name == item_name for item in self.cart_items)
+        self.cart_items = [item for item in self.cart_items if item.item_name != item_name]
+        if not found:
+            print("Item not found in cart. Nothing removed")
 #modify the cart
-    def modify_item(self,ItemToPurchase):
+    def modify_item(self, updated_item: ItemToPurchase):
         for item in self.cart_items:
-            if item.name == ItemToPurchase.name:
-                if ItemToPurchase.description:
-                    item.description = ItemToPurchase.description
-                if ItemToPurchase.price:
-                    item.price = ItemToPurchase.price
-                if ItemToPurchase.quantity:
-                    item.quantity =ItemToPurchase.quantity
+            if item.item_name == updated_item.item_name:
+                if updated_item.item_description:
+                    item.item_description = updated_item.item_description
+                if updated_item.item_price is not None:
+                    item.item_price = updated_item.item_price
+                if updated_item.item_quantity is not None:
+                    item.item_quantity = updated_item.item_quantity
                 return
         print("Item not found in cart. Nothing modified.")
 #get_num_items_in_cart
     def get_num_items_in_cart(self):
         total = 0
         for item in self.cart_items:
-            total += item.quantity
+            total += item.item_quantity
         return total
 #get_cost_of_cart()
     def get_cost_of_cart(self):
         total = 0
         for item in self.cart_items:
-            total += (item.price * item.quantity)
+            total += (item.item_price * item.item_quantity)
         return total
 #do print_total
     def print_total(self):
@@ -162,18 +166,18 @@ class ShoppingCart:
         print(f"Number of Items : {self.get_num_items_in_cart()}")
 
         for item in self.cart_items:
-            print(f"{item.name} {item.quantity} @ ${item.price} = ${item.price * item.quantity}")
+            print(f"{item.item_name} {item.item_quantity} @ ${item.item_price} = ${item.item_price * item.item_quantity}")
         print(f"Total: ${self.get_cost_of_cart()}")
 #print the description
     def print_descriptions(self):
         print(f"{self.customer_name}'s Shopping Cart - {self.current_date}")
         print("Item Descriptions")
         for item in self.cart_items:
-            print(f"{item.name}: {item.description}")
+            print(f"{item.item_name}: {item.item_description}")
 
 #part 5
 #print the menu and logic to it 
-    def print_menu(cart):
+    def print_menu(self):
         print("\nMENU")
         print("a - Add item to cart")
         print("r - Remove item from cart")
@@ -216,5 +220,8 @@ class ShoppingCart:
             else:
                 print("Invalid option. Please try again.")
 
+
+
 if __name__ == "__main__":
-    main()
+    cart = ShoppingCart()
+    cart.main()
