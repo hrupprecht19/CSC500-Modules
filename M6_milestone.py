@@ -1,19 +1,18 @@
 #changing step1 to a setter getter method
 class ItemToPurchase:   
-    def __init__(self, item_name='none', description = 'none', item_price=0, item_quantity=0): #added description
+    def __init__(self, item_name='none', item_description = 'none', item_price=0, item_quantity=0): #added description
         self.item_name = item_name
-        self.description = description
+        self.description = item_description
         self.item_price = item_price
         self.item_quantity = item_quantity
-        self.item_total = self.item_price * self.item_quantity
 
     @property
     def item_name(self):
         return self._item_name
     
     @property
-    def description(self):
-        return self._description
+    def item_description(self):
+        return self._item_description
     
     @property
     def item_price(self):
@@ -22,45 +21,53 @@ class ItemToPurchase:
     @property
     def item_quantity(self):
         return self._item_quantity
+   
+    @property
+    def item_total(self):
+        return self.item_price * self.item_quantity
     
     @item_name.setter
-    def item_name(self, value):
+    def item_name(self, value: str):
         if not isinstance(value, str):
             raise ValueError("Item name must be a string")
         self._item_name = value 
     
-    @description.setter
-    def description(self, value):
+    @item_description.setter
+    def item_description(self, value: str):
         if not isinstance(value, str):
             raise ValueError("Description must be a string")
-        self._description = value
+        self._item_description = value
     
+    @item_price.setter
+    def item_price(self, value: float):
+        if not isinstance(value, (int, float)):
+            raise ValueError("Item price must be a number")
+        if value < 0:
+            raise ValueError("Item price cannot be negative")
+        self._item_price = value
     
+    @item_quantity.setter
+    def item_quantity(self, value: int):
+        if not isinstance(value, int):
+            raise ValueError("Item quantity must be an integer")
+        if value < 0:
+            raise ValueError("Item quantity cannot be negative")
+        self._item_quantity = value
     
-
-    @property
+    @item_total.setter
+    def item_total(self, value: float):
+        raise AttributeError("item_total is a read-only property")  
 
     def print_item_cost(self):
-        print('{} on hand {} @ $ {:.2f} = $ {:.2f}'.format(
-            self.item_name, 
-            self.item_quantity, 
-            self.item_price, 
-            self.item_total
-        ))
+        print(f'{self.item_name} on hand {self.item_quantity} @ ${self.item_price:.2f} = ${self.item_total:.2f}')
 
-    @property
-    def item_total(self):
-        return self.item_price * self.item_quantity
-    @item_total.setter
-    def item_total(self, value):
-        raise AttributeError("item_total is a read-only property")  
 #Step2
 #function to get the total value of the inventory
-    def get_total_value(inventory):
-        total = 0
-        for item in inventory:
-            total += item.item_total
-        return total    
+def get_total_value(inventory):
+    total = 0
+    for item in inventory:
+        total += item.item_total
+    return total    
 #Step3
 #place to store the items added
 inventory = []
@@ -71,6 +78,14 @@ while True:
     if name.lower() == 'done':
         break
     #creating a nested loop to have valued inputs
+    while True:
+        try:
+            description = input("Enter the item description: ")
+            if not description:
+                description = 'none'  # Default value if no description is provided
+            break
+        except ValueError:
+            print("Invalid entry. Please enter a valid description.")  
     while True:
         try:
             price = float(input("Enter the price: "))
@@ -85,8 +100,18 @@ while True:
         except ValueError:
             print("Invalid entry. Please enter a whole number for quantity.")
     
-    item = ItemToPurchase(name, price, quantity)
+        
+    item = ItemToPurchase(name, description, price, quantity)
     inventory.append(item)
+
+    print("\n Inventory Summary:")
+    for item in inventory:
+        item.print_item_cost()
+
+    # Print total inventory value
+    print("\nTotal inventory value: ${:.2f}".format(get_total_value(inventory)))
+
+
 #Step4 
 #star with creating the shoping cart
 class ShoppingCart:
