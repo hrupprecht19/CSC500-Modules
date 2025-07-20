@@ -206,10 +206,25 @@ class ShoppingCart:
                 description = input("Enter new description (or leave blank): ")
                 price = input("Enter new price (or leave blank): ")
                 quantity = input("Enter new quantity (or leave blank): ")
-                item = ItemToPurchase(name, description if description else None,
-                                      float(price) if price else None,
-                                      int(quantity) if quantity else None)
-                self.modify_item(item)
+
+                # Find the item in the cart
+                for item in self.cart_items:
+                    if item.item_name == name:
+                        if description:
+                            item.item_description = description
+                        if price:
+                            try:
+                                item.item_price = float(price)
+                            except ValueError:
+                                print("Invalid price entered. No change made.")
+                        if quantity:
+                            try:
+                                item.item_quantity = int(quantity)
+                            except ValueError:
+                                print("Invalid quantity entered. No change made.")
+                        break
+                else:
+                    print("Item not found in cart. Nothing modified.")
             elif choice == 'i':
                 self.print_descriptions()
             elif choice == 'o':
