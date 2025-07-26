@@ -1,0 +1,72 @@
+#Creating Python Programs
+#Part 1:
+#Write a program that calculates the total amount of a meal purchased at a restaurant. The 
+#program should ask the user to enter the charge for the food and then calculate the amounts 
+#with an 18 percent tip and 7 percent sales tax. Display each of these amounts and the total 
+#price.
+
+charge_inputs = []  # Initialize an empty list
+
+while True:
+    user_input = input("Enter the charge for the food:\nType 'done' when no more prices to add. $")  # Get raw user input
+    if user_input.lower() == 'done':  # Check if the user is done
+        break
+    try:
+        charge = float(user_input)  # Convert to float only after confirming it's not 'done'
+        charge_inputs.append(charge)  # Add the charge to the list
+    except ValueError:
+        print("Please enter a valid number or 'done' to finish.")
+
+print("Your list of inputs:", charge_inputs)
+
+# Calculate the total food charge
+food_charge = sum(charge_inputs)
+
+# Calculate tip and tax
+tip = food_charge * 0.18
+tax = food_charge * 0.07
+total = food_charge + tip + tax
+
+# Store all amounts in an array (list)
+bill_components = [food_charge, tip, tax, total]
+
+# Display the results
+print(f"\nFood Charge: ${bill_components[0]:.2f}")
+print(f"Tip (18%): ${bill_components[1]:.2f}")
+print(f"Sales Tax (7%): ${bill_components[2]:.2f}")
+print(f"Total Amount: ${bill_components[3]:.2f}")
+
+#Part 2:
+#Many people keep time using a 24-hour clock (11 is 11am and 23 is 11pm, 0 is midnight). If it 
+#is currently 13 and you set your alarm to go off in 50 hours, it will be 15 (3pm). Write a 
+#Python program to solve the general version of the above problem. Ask the user for the time 
+#now (in hours) and then ask for the number of hours to wait for the alarm. Your program 
+#should output what the time will be on a 24-hour clock when the alarm goes off.
+
+# Get a valid current time from the user
+while True:
+    try:
+        current_time = int(input("What is the current time (0-23)? ")) 
+        if 0 <= current_time <= 23: #this is to make sure the input within the 23 hours
+            break
+        else:
+            print("Please enter a number between 0 and 23.") #this is added for the wrong input
+    except ValueError:
+        print("Invalid input. Please enter a whole number.")#This is for when the iput is .5, .3 or other errors 
+    
+# Ask for the number of hours to wait
+while True:
+    try:
+        hours_to_wait = int(input("How many hours to wait for the alarm? ")) 
+        if hours_to_wait >= 0: # This is to make sure the input is valet 
+            break
+        else:
+            print("Please enter a non-negative number.") # This is in case a - number is input
+    except ValueError:
+        print("Invalid input. Please enter a whole number.")
+
+# Calculate future alarm time using the module 
+alarm_time = (current_time + hours_to_wait)% 24
+
+# Display the result
+print(f"The alarm will go off at {alarm_time}:00 on a 24-hour clock.")

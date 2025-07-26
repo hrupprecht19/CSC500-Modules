@@ -157,7 +157,7 @@ class ShoppingCart:
         for item in self.cart_items:
             total += (item.item_price * item.item_quantity)
         return total
-#do print_total
+#Part 6  print_total
     def print_total(self):
         if not self.cart_items:
             print("SHOPPING CART IS EMPTY")
@@ -168,7 +168,7 @@ class ShoppingCart:
         for item in self.cart_items:
             print(f"{item.item_name} {item.item_quantity} @ ${item.item_price} = ${item.item_price * item.item_quantity}")
         print(f"Total: ${self.get_cost_of_cart()}")
-#print the description
+#part 6 print the description
     def print_descriptions(self):
         print(f"{self.customer_name}'s Shopping Cart - {self.current_date}")
         print("Item Descriptions")
