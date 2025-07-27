@@ -1,6 +1,7 @@
 class CourseInfo:
     def __init__(self):
         # Initialize the course information dictionary
+        # Nested the lis in a dictionary to store course information
         self._course = {
             "CSC101": ["3004", "Hayes", "8:00 AM"],
             "CSC102": ["4501", "Alvarado", "9:00 AM"],
@@ -12,7 +13,9 @@ class CourseInfo:
     def display_course_info(self, course_number):
         course_info = self._course.get(course_number)
         if course_info is None:
+            print("Available courses: CSC101, CSC102, CSC103, NT110, CM241")
             print(f"\nError: Course '{course_number}' not found. Please enter a valid course number.")
+             #print("Available courses: CSC101, CSC102, CSC103, NT110, CM241")
             return
         # Display the course information
         print(f"\nCourse Information for {course_number}:")
@@ -34,10 +37,7 @@ def main():
         if course == 'QUIT':
             print("Goodbye!")
             break
-        if not course.isalnum():
-            print("Error: Invalid input. Please enter a valid course number (letters and numbers only).")
-            print("Available courses: CSC101, CSC102, CSC103, NT110, CM241")
-            continue
+        # Validate the course number input
         courses.display_course_info(course)
 
 if __name__ == "__main__":
