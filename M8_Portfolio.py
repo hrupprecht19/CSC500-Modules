@@ -1,6 +1,6 @@
 #changing step1 to a setter getter method
 class ItemToPurchase:   
-    def __init__(self, item_name='none', item_description = 'none', item_price=0, item_quantity=0): #added description
+    def __init__(self, item_name='none', item_description='none', item_price=0, item_quantity=0):
         self.item_name = item_name
         self.item_description = item_description
         self.item_price = item_price
@@ -61,57 +61,6 @@ class ItemToPurchase:
     def print_item_cost(self):
         print(f'{self.item_name} on hand {self.item_quantity} @ ${self.item_price:.2f} = ${self.item_total:.2f}')
 
-#Step2
-#function to get the total value of the inventory
-def get_total_value(inventory):
-    return sum(item.item_total for item in inventory)
-    
-#Step3
-#place to store the items added
-inventory = []
-# get the input in the string, float, integer format        
-# loop for more than one item
-while True:
-    name = input("Enter the item name (or type 'done' to finish): ")
-    if name.lower() == 'done':
-        break
-    #creating a nested loop to have valued inputs
-    while True:
-        try:
-            description = input("Enter the item description: ")
-            if not description:
-                description = 'none'  # Default value if no description is provided
-            break
-        except ValueError:
-            print("Invalid entry. Please enter a valid description.")  
-    while True:
-        try:
-            price = float(input("Enter the price: "))
-            break
-        except ValueError:
-            print("Invalid entry. Please enter a number for price.") 
-    #creating another nested loop to have a valued input
-    while True:
-        try:
-            quantity = int(input("Enter the quantity: "))
-            break
-        except ValueError:
-            print("Invalid entry. Please enter a whole number for quantity.")
-    
-        
-    item = ItemToPurchase(name, description, price, quantity)
-    inventory.append(item)
-
-    print("\n Inventory Summary:")
-    for item in inventory:
-        item.print_item_cost()
-
-    # Print total inventory value
-    print("\nTotal inventory value: ${:.2f}".format(get_total_value(inventory)))
-
-
-#Step4 
-#star with creating the shoping cart
 class ShoppingCart:
     def __init__(self, customer_name = 'none', current_date = "January 1, 2020"):  
         self.customer_name = customer_name
@@ -125,58 +74,57 @@ class ShoppingCart:
         for existing_item in self.cart_items:
             if existing_item.item_name == item.item_name:
                 existing_item.item_quantity += item.item_quantity
-                return
+                return 
         self.cart_items.append(item)
 #item to remove from cart
-    def remove_item(self, item_name: str):  
+    def remove_item(self, item_name: str):
         found = any(item.item_name == item_name for item in self.cart_items)
         self.cart_items = [item for item in self.cart_items if item.item_name != item_name]
         if not found:
-            print("Item not found in cart. Nothing removed")
+            print("Item not found in cart. Nothing removed")       
 #modify the cart
     def modify_item(self, updated_item: ItemToPurchase):
         for item in self.cart_items:
             if item.item_name == updated_item.item_name:
                 if updated_item.item_description:
                     item.item_description = updated_item.item_description
-                if updated_item.item_price is not None:
+                if updated_item.item_price != 0:
                     item.item_price = updated_item.item_price
-                if updated_item.item_quantity is not None:
+                if updated_item.item_quantity != 0:
                     item.item_quantity = updated_item.item_quantity
                 return
         print("Item not found in cart. Nothing modified.")
-#get_num_items_in_cart
+# Get the number of items in the cart
     def get_num_items_in_cart(self):
         total = 0
         for item in self.cart_items:
             total += item.item_quantity
         return total
-#get_cost_of_cart()
+# Get the total cost of the cart
     def get_cost_of_cart(self):
         total = 0
         for item in self.cart_items:
-            total += (item.item_price * item.item_quantity)
+            total += item.item_total
         return total
-#Part 6  print_total
-    def print_total(self):
+# Print the shopping cart summarydef print_total(self):
+    def print_total(self): 
+        print(f"{self.customer_name}'s Shopping Cart - { self.current_date}")   
         if not self.cart_items:
+            print("Number of Items : 0")
             print("SHOPPING CART IS EMPTY")
             return
-        print(f"{self.customer_name}'s Shopping Cart - { self.current_date}")
-        print(f"Number of Items : {self.get_num_items_in_cart()}")
-
-        for item in self.cart_items:
-            print(f"{item.item_name} {item.item_quantity} @ ${item.item_price} = ${item.item_price * item.item_quantity}")
-        print(f"Total: ${self.get_cost_of_cart()}")
+        else:
+            print(f"Number of Items : {self.get_num_items_in_cart()}")
+            for item in self.cart_items:
+                print(f"{item.item_name} {item.item_quantity} @ ${item.item_price:.2f} = ${item.item_total:.2f}")
+            print(f"Total: ${self.get_cost_of_cart():.2f}")
 #part 6 print the description
     def print_descriptions(self):
         print(f"{self.customer_name}'s Shopping Cart - {self.current_date}")
         print("Item Descriptions")
         for item in self.cart_items:
             print(f"{item.item_name}: {item.item_description}")
-
-#part 5
-#print the menu and logic to it 
+# Main menu for the shopping cart
     def print_menu(self):
         print("\nMENU")
         print("a - Add item to cart")
@@ -186,25 +134,44 @@ class ShoppingCart:
         print("o - Output shopping cart")
         print("q - Quit")
         print("Choose an option:",end="")
- 
+    
     def main(self):
         print("\nWelcome to the Shopping Cart System!")
-        print("\n Enter your name and current date to start shopping.")
+        print("Enter your name and current date to start shopping.")
         self.customer_name = input("Enter your name: ")
         self.current_date = input("Enter the current date (e.g., January 1, 2020): ")
-        # while True:
-        # # Prompt the user for a course numberdone
-        # print("\nEnter course number :")
-        # course = input().upper().strip()
-        # if course == 'QUIT':
-        #     print("Goodbye!")
-        #     break
-        # # Validate the course number input
-        # courses.display_course_info(course)
-        
+        print(f"\nCustomer name: {self.customer_name}")      
+        print(f"\nToday's date: {self.current_date}")
+
+# fixing the prompt to add two items to the cart
+        print("\nEnter details for two items to add to your cart")
+        for i in range(2):
+            print(f"\nItem {i + 1}:")
+            name = input(f"Enter the item name for item {i + 1}: ")
+            description = input(f"Enter the item description for item {i + 1}: ")
+            while True:
+                try:
+                    price = float(input(f"Enter the item price for item {i + 1}: "))
+                    break
+                except ValueError:
+                    print("Invalid entry. Please enter a number for price.")
+            while True:
+                try:
+                    quantity = int(input(f"Enter the item quantity for item {i + 1}: "))
+                    break
+                except ValueError:
+                    print("Invalid entry. Please enter a whole number for quantity.")
+            item = ItemToPurchase(name, description, price, quantity)
+            self.add_item(item)
+
+        # Print total cost of the two items
+        print("\nTOTAL COST")
+        for item in self.cart_items:
+            item.print_item_cost()
+        print(f"Total: ${self.get_cost_of_cart():.2f}")
+
         while True:
             self.print_menu()
-            # Add a line for user input error handling
             choice = input().strip().lower()
             if choice == 'a':
                 name = input("Enter the item name: ")
